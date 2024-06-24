@@ -33,6 +33,18 @@ public class ExceptionFilter : IExceptionFilter
             context.Result = new ObjectResult(errorResponse);
 
         }
+        else if (context.Exception is UserNotFoundException)
+        {
+
+            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            context.Result = new ObjectResult("User not found");
+        }        
+        else if (context.Exception is UserAlreadyExistsException)
+        {
+
+            context.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+            context.Result = new ObjectResult("User already exists");
+        }
         else
         {
             var errorResponse = new ResponseErrorJson(context.Exception.Message);
