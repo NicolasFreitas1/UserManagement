@@ -1,0 +1,16 @@
+-- public."Users" definition
+
+-- Drop table
+
+-- DROP TABLE public."Users";
+
+CREATE TABLE public."Users" (
+	"Id" int4 DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
+	"Name" varchar(250) NOT NULL,
+	"Cnpj" varchar(14) NOT NULL,
+	"DateRegister" timestamp(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	"Address" varchar(250) NOT NULL,
+	"PhoneNumber" varchar(20) NOT NULL,
+	CONSTRAINT users_pk PRIMARY KEY ("Id"),
+	CONSTRAINT users_unique UNIQUE ("Cnpj")
+);
