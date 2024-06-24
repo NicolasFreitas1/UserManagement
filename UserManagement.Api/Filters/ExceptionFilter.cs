@@ -41,7 +41,6 @@ public class ExceptionFilter : IExceptionFilter
         }        
         else if (context.Exception is UserAlreadyExistsException)
         {
-
             context.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
             context.Result = new ObjectResult("User already exists");
         }

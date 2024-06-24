@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using UserManagement.Application.UseCases.Users.Delete;
+using UserManagement.Application.UseCases.Users.Edit;
 using UserManagement.Application.UseCases.Users.GetById;
 using UserManagement.Application.UseCases.Users.ListAll;
 using UserManagement.Application.UseCases.Users.Register;
@@ -14,5 +15,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGetUserByIdUseCase, GetUserByIdUseCase>(); 
         services.AddScoped<IListAllUsersUseCase, ListAllUsersUseCase>(); 
         services.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>(); 
+        services.AddScoped<IEditUserUseCase, EditUserUseCase>(); 
     }
 }

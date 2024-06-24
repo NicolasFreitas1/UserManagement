@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.UseCases.Users.Delete;
+using UserManagement.Application.UseCases.Users.Edit;
 using UserManagement.Application.UseCases.Users.GetById;
 using UserManagement.Application.UseCases.Users.ListAll;
 using UserManagement.Application.UseCases.Users.Register;
@@ -49,5 +50,15 @@ public class UserController : ControllerBase
         useCase.Execute(id);
 
         return NoContent();
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Route("{id}")]
+    public IActionResult Update([FromServices] IEditUserUseCase useCase, [FromRoute] int id, [FromBody] RequestEditUserJson request)
+    {
+        useCase.Execute(id, request);
+
+        return NoContent(); 
     }
 }

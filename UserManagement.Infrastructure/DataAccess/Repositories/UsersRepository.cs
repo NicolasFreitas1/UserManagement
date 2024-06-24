@@ -13,23 +13,23 @@ internal class UsersRepository : IUsersRepository
         _dbContext = dbContext;
     }
 
-    public async void Add(User user)
+    public void Add(User user)
     {
-        var userExists = await _dbContext.Users.FirstOrDefaultAsync(u => u.Cnpj == user.Cnpj);
+        var userExists = _dbContext.Users.FirstOrDefault(u => u.Cnpj == user.Cnpj);
 
         if (userExists != null) 
         {
             throw new UserAlreadyExistsException();
         }
 
-        _dbContext.Users.Add(user);
+         _dbContext.Users.Add(user);
 
-        _dbContext.SaveChanges();
+         _dbContext.SaveChanges();
     }
 
-    public async void Delete(int id)
+    public void Delete(int id)
     {
-       var user = await _dbContext.Users.FindAsync(id);
+       var user =  _dbContext.Users.Find(id);
 
         if (user == null) 
         {
@@ -37,7 +37,7 @@ internal class UsersRepository : IUsersRepository
         }
 
         _dbContext.Users.Remove(user);
-        await _dbContext.SaveChangesAsync();
+         _dbContext.SaveChanges();
 
     }
 
@@ -58,16 +58,21 @@ internal class UsersRepository : IUsersRepository
         return user;
     }
 
-    public async void Update(int id, User user)
+    public void Update(int id, User user)
     {
-        var userFounded = await _dbContext.Users.FindAsync(id);
+        var userFounded = _dbContext.Users.Find(id);
 
         if (userFounded == null)
         {
             throw new UserNotFoundException();
         }
 
-        _dbContext.Entry(user).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
+        userFounded.Name = user.Name;
+        userFounded.Address = user.Address;
+        userFounded.PhoneNumber = user.PhoneNumber;
+        userFounded.DateRegister = DateTime.UtcNow;
+
+        _dbContext.Entry(userFounded).State = EntityState.Modified;
+        _dbContext.SaveChanges();
     }
 }
